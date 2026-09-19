@@ -1,0 +1,21 @@
+{
+  "verifiedAt": "2026-09-19",
+  "package": "@earendil-works/pi-coding-agent",
+  "version": "0.85.1",
+  "sourceCommit": "d981de1229ef899957bbe968bc8dcda02a21f477",
+  "sourceVersionMatchesRegistry": true,
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "registry": "https://registry.npmjs.org/@earendil-works/pi-coding-agent/0.85.1",
+  "source": "https://github.com/earendil-works/pi/tree/d981de1229ef899957bbe968bc8dcda02a21f477",
+  "tarball": "https://registry.npmjs.org/@earendil-works/pi-coding-agent/-/pi-coding-agent-0.85.1.tgz",
+  "integrity": "sha512-FGRN+OHbWaefBPGaTggAdLjrIHW+s2PzLyglz/5dfLzb9of7uuXMXYC0fJIeZTw+shS32o2cuQ9jF7YSDuL/oQ==",
+  "license": "MIT",
+  "sourceDocuments": {
+    "extensions.md": "39c54b91faabd76a17ab07f7ae85b274e941f36aacfaa6fe304281f697671faf",
+    "sdk.md": "3c575c006043769bdb85d01fdbd9e86468f45160deedc2519db3464387eaffbf",
+    "PI-LICENSE": "0457f5bcec3b3b211605dfb5d1a49042fd638f3686a410fe099c24a25af13c48"
+  },
+  "note": "Runtime comes from the published npm package; corresponding source metadata and docs fetched at its gitHead. No current-main API assumptions."
+}

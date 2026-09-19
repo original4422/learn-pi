@@ -1,0 +1,38 @@
+{
+  "name": "learn-pi",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A bilingual, progressive course extending the real Pi agent in TypeScript",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:integration": "node --import tsx --test tests/runtime.test.ts tests/integrations.test.ts",
+    "agent": "node --import tsx src/cli.ts",
+    "demo": "node --import tsx scripts/demo.ts",
+    "lab:reset": "node --import tsx scripts/lab-reset.ts",
+    "docs:dev": "vitepress dev docs --host 127.0.0.1",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs --host 127.0.0.1",
+    "docs:check": "node --import tsx scripts/check-docs.ts",
+    "verify": "npm run check && npm test && npm run docs:build && npm run docs:check",
+    "model:smoke": "node --import tsx scripts/model-smoke.ts"
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "0.85.1",
+    "@earendil-works/pi-ai": "0.85.1",
+    "@modelcontextprotocol/sdk": "1.30.0",
+    "typebox": "1.3.7",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.19",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "vitepress": "1.6.4"
+  }
+}
