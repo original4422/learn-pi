@@ -1,0 +1,5 @@
+
+> learn-pi@1.0.0 model:smoke
+> node --import tsx scripts/model-smoke.ts
+
+{"status":"SKIPPED","reason":"No matching authenticated provider is available","at":"2026-09-19T08:39:32.077Z","remoteModelVerified":false}

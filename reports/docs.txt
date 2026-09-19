@@ -1,0 +1,17 @@
+
+> learn-pi@1.0.0 docs:build
+> vitepress build docs
+
+
+  vitepress v1.6.4
+
+- building client + server bundles...
+✓ building client + server bundles...
+- rendering pages...
+✓ rendering pages...
+build complete in 1.81s.
+
+> learn-pi@1.0.0 docs:check
+> node --import tsx scripts/check-docs.ts
+
+PASS: 19 Chinese + 19 English pages, 39 built pages, 1280 local links/anchors; default zh-CN.

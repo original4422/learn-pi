@@ -1,0 +1,79 @@
+{
+  "at": "2026-09-19T08:43:11.089993+00:00",
+  "status": "LOCAL_V1_PASS_WITH_DECLARED_EXTERNAL_LIMITS",
+  "environment": {
+    "os": "Darwin 24.6.0 arm64",
+    "node": "24.16.0",
+    "npm": "11.16.0",
+    "git": "2.39.5",
+    "pi": "0.85.1"
+  },
+  "checks": {
+    "version": "PASS",
+    "typecheck": "PASS",
+    "tests": {
+      "pass": 45,
+      "fail": 0,
+      "skipped": 0,
+      "stages_executed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "docs": {
+      "chinese_pages": 19,
+      "english_pages": 19,
+      "built_pages": 39,
+      "internal_links_and_anchors": 1280,
+      "default_language": "zh-CN",
+      "status": "PASS"
+    },
+    "demo": "PASS_REAL_PI_SCRIPTED_MODEL",
+    "python_rpc": "PASS_GET_STATE_NO_MODEL",
+    "model_smoke": {
+      "status": "SKIPPED",
+      "reason": "No matching authenticated provider is available",
+      "at": "2026-09-19T08:39:32.077Z",
+      "remoteModelVerified": false
+    },
+    "container": {
+      "status": "NOT_RUN",
+      "reason": "Docker CLI present; daemon unavailable"
+    }
+  },
+  "browser": {
+    "origin": "http://127.0.0.1:4173",
+    "chinese_home": "PASS",
+    "english_home": "PASS",
+    "same_chapter_language_switch": "PASS",
+    "chinese_MCP_search": "PASS",
+    "responsive": {
+      "viewportWidth": 390,
+      "viewportHeight": 844,
+      "scrollWidth": 390,
+      "horizontalOverflow": false
+    },
+    "manual_desktop_visual_review": "PASS"
+  },
+  "publishing": {
+    "git_remote": false,
+    "pushed": false,
+    "public_deployment": false,
+    "social_publishing": false
+  },
+  "evidence": [
+    "verification.txt",
+    "docs.txt",
+    "demo.txt",
+    "python-rpc.txt",
+    "model-smoke.json",
+    "version-lock.json"
+  ]
+}

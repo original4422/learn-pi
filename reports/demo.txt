@@ -1,0 +1,42 @@
+
+> learn-pi@1.0.0 demo
+> node --import tsx scripts/demo.ts
+
+OFFLINE DEMO — real Pi 0.85.1 + scripted model responses; no remote model or reasoning validation.
+Workspace: /Users/original/Project/github/personal_project/learn-pi/.cache/demos/todo-uhhj0X
+Pi dispatch → read
+Pi dispatch → task_add
+Pi dispatch → catalog_search
+Pi dispatch → checkpoint_create
+Pi dispatch → edit
+Pi dispatch → verify_project
+The scripted tool sequence is complete. Inspect the actual test result and diff below.
+✔ adds a todo without mutating the input (0.554416ms)
+✔ trims surrounding whitespace (0.049083ms)
+✔ rejects blank text (0.1575ms)
+✔ completion preserves other todos (0.072125ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80.682042
+
+diff --git a/todo.ts b/todo.ts
+index 3b48da7..cab9fba 100644
+--- a/todo.ts
++++ b/todo.ts
+@@ -2,6 +2,8 @@ export interface Todo { id: number; text: string; done: boolean }
+ 
+ /** Exercise: reject blank text and store the trimmed text. */
+ export function addTodo(todos: Todo[], text: string): Todo[] {
++  text = text.trim();
++  if (!text) throw new Error('blank todo');
+   const nextId = Math.max(0, ...todos.map(todo => todo.id)) + 1;
+   return [...todos, { id: nextId, text, done: false }];
+ }
+
+PASS: failing → fixed → 4 passing tests → original restored.
+Report: /Users/original/Project/github/personal_project/learn-pi/.cache/demos/todo-uhhj0X/demo-report.json

@@ -1,0 +1,87 @@
+
+> learn-pi@1.0.0 verify
+> npm run version:check && npm run check && npm test && npm run docs:build && npm run docs:check
+
+
+> learn-pi@1.0.0 version:check
+> node --import tsx scripts/check-version.ts
+
+PASS: published Pi 0.85.1, source d981de1229ef899957bbe968bc8dcda02a21f477, installed packages and lockfile integrity agree.
+
+> learn-pi@1.0.0 check
+> tsc --noEmit
+
+
+> learn-pi@1.0.0 test
+> node --import tsx --test tests/*.test.ts
+
+✔ plan permits workspace exploration and task metadata but blocks mutation and unknown tools (8.807625ms)
+✔ path policy rejects sibling prefixes, traversal, secrets and aliases into protected metadata (7.199084ms)
+✔ missing descendants behind symlinks and dangling symlinks cannot bypass containment (6.3225ms)
+✔ path policy rejects Pi normalization aliases and unchecked missing-file read fallbacks (3.051458ms)
+✔ approval gates deny missing UI, headless, rejection and callback failures before executor runs (4.427959ms)
+✔ audit serializes valid JSONL without retaining extra inputs, prompts or paths (46.1465ms)
+✔ task transitions survive new instances and enforce one active task without corrupting state (101.260084ms)
+✔ task backup recovers a corrupt snapshot, preserving the last committed good state (72.523291ms)
+✔ same-process TaskStore instances serialize writes and leave no temporary files (253.395917ms)
+✔ invalid task schemas and duplicate active tasks fail closed on recovery (3.710208ms)
+✔ real Git checkpoints recover tracked and untracked sample files without touching parent or metadata (847.991125ms)
+✔ checkpoint restore preflights symbolic links and refuses an unmarked/parent repository (762.056416ms)
+✔ restore preflight preserves secrets when a file became a directory, then handles safe shape changes (487.257667ms)
+✔ real MCP stdio: initialize, list, call, and subprocess shutdown (334.188542ms)
+✔ real MCP server validates calls even when a client bypasses its local schema (287.829375ms)
+✔ MCP rejects invalid input, pre-cancellation, and an expired startup deadline (3.524042ms)
+✔ Pi MCP bridge is a real tool definition with a bounded schema (0.258375ms)
+✔ children collect all outcomes in input order and never exceed two runners (16.551208ms)
+✔ child output truncation is explicit and runtime validation rejects excess tasks (0.386917ms)
+✔ timeouts retire their worker slots, including runners that ignore abort (10.91175ms)
+✔ parent cancellation reaches running children and cancels queued tasks (5.835125ms)
+✔ real Pi child setup: clean resources, own path hooks, no write/bash or recursive tools (27.522542ms)
+✔ real Pi child runner performs a read with a scripted provider (not a live model) (28.296ms)
+✔ real Pi child model-call and tool-call budgets stop scripted runaway loops (47.168875ms)
+✔ real Pi child tool dispatch blocks traversal before reading outside content (19.129334ms)
+✔ delegate tool rejects overlapping batches until timed-out runners settle (12.430666ms)
+✔ native Pi loader compiles the real .ts entry and registers course tools/hooks/commands (834.946709ms)
+✔ native bundled Pi CLI loads explicit extension in offline isolated help mode (314.32925ms)
+✔ native Pi loader reports explicit path errors instead of pretending a stage loaded (637.719792ms)
+✔ native Pi RPC startup applies course tool selection and exposes commands without a model call (517.063541ms)
+✔ version lock matches installed package and downloaded registry/source evidence (4.859583ms)
+✔ real Pi read dispatch cannot reinterpret path aliases to expose protected or outside files (97.676333ms)
+✔ headless real Pi mutations require an explicit approval callback (29.343584ms)
+✔ persistent session storage rejects a symlink out of course metadata before writing transcripts (11.592917ms)
+✔ tool budget exhaustion is surfaced as failure instead of a successful partial answer (42.56325ms)
+✔ verification refuses an unmarked root before executing fixture code (7.572333ms)
+✔ verification ignores inherited Git overrides and disables local fsmonitor execution (526.63725ms)
+✔ every stage is a strict cumulative composition and rejects invalid stage (0.869334ms)
+✔ real Pi session: plan mode blocks write, then a denied approval still blocks (402.789834ms)
+✔ real Pi tool dispatch: traversal rejected, tasks persist and MCP performs a request (540.884ms)
+✔ real Pi coding loop edits, runs actual tests, inspects diff and restores checkpoint (844.106875ms)
+✔ real model-call budget stops runaway turns before another provider request (252.301417ms)
+✔ metadata symlinks fail before log or task writes (190.529667ms)
+✔ all nine stage demos execute their actual Pi integration and verify their teaching outcome (3929.12025ms)
+✔ stage demos reject invalid stages before starting a model session (0.383417ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6025.714375
+
+> learn-pi@1.0.0 docs:build
+> vitepress build docs
+
+
+  vitepress v1.6.4
+
+- building client + server bundles...
+✓ building client + server bundles...
+- rendering pages...
+✓ rendering pages...
+build complete in 1.73s.
+
+> learn-pi@1.0.0 docs:check
+> node --import tsx scripts/check-docs.ts
+
+PASS: 19 Chinese + 19 English pages, 39 built pages, 1280 local links/anchors; default zh-CN.
