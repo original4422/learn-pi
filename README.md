@@ -63,6 +63,8 @@ npm run agent -- --stage 9 --workspace examples/workspaces/todo
 
 也可以安全地配置对应 API Key 环境变量，再用 `--provider` / `--model` 选择实际可用模型。默认 `plan` 模式；先读代码与测试，审阅计划后由人输入 `/mode execute`，再逐项批准具体操作。`/tasks`、`/status`、`/checkpoint LABEL`、`/restore ID`、`/compact` 和 `/quit` 提供宿主控制。
 
+退出后，用 `npm run agent -- --workspace examples/workspaces/todo --resume` 继续当前工作区最近活跃的会话。对话保存在工作区 `.learn-pi/sessions/`，启动时显示会话 ID 与文件。省略 `--resume` 会新建对话；续聊使用本次启动的阶段、模型和模式，默认仍为 `plan`。
+
 `npm run model:smoke` 在有匹配凭据时执行真实模型样例，否则明确记录 `SKIPPED`，结果在 `reports/model-smoke.json`。验收机器没有可用模型凭据，远程模型效果未验证。
 
 ## 清楚的边界

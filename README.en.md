@@ -63,6 +63,8 @@ npm run agent -- --stage 9 --workspace examples/workspaces/todo
 
 Alternatively configure the appropriate API key environment variable securely, then select an available model with `--provider` / `--model`. The agent starts in `plan`. Read code and tests, review the plan, enter `/mode execute` yourself, and approve concrete operations. Host commands include `/tasks`, `/status`, `/checkpoint LABEL`, `/restore ID`, `/compact`, and `/quit`.
 
+After exiting, run `npm run agent -- --workspace examples/workspaces/todo --resume` to continue the most recently active conversation in that workspace. Conversations live in `.learn-pi/sessions/`; startup prints the session ID and file. Omitting `--resume` starts a new conversation. Resuming uses the current stage, model, and mode options, with `plan` as the default.
+
 `npm run model:smoke` executes a live repair when matching credentials exist; otherwise it explicitly records `SKIPPED` in `reports/model-smoke.json`. The acceptance machine has no usable credentials, so remote-model behavior remains unverified.
 
 ## Explicit boundaries

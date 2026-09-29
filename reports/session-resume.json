@@ -1,0 +1,29 @@
+{
+  "at": "2026-09-29T18:14:53Z",
+  "change": "Explicit --resume for the most recently active conversation in the current workspace",
+  "environment": { "node": "24.16.0", "pi": "0.85.1" },
+  "status": "PASS_REAL_PI_SCRIPTED_MODEL",
+  "remoteModelVerified": false,
+  "checks": {
+    "npm run verify": {
+      "status": "PASS",
+      "tests": { "pass": 48, "fail": 0, "skipped": 0 },
+      "docs": { "chinesePages": 19, "englishPages": 19, "builtPages": 39, "linksAndAnchors": 1282 }
+    },
+    "npm run demo": "PASS: failing fixture -> fixed -> 4 passing tests -> original restored",
+    "npm run agent -- --help": "PASS: --resume and its selection behavior are documented"
+  },
+  "regressions": {
+    "source": "tests/sessions.test.ts",
+    "pass": 3,
+    "coverage": [
+      "A new model runtime receives persisted user, assistant, and tool-result context through real Pi",
+      "Resumed messages append to the same session file and retain its ID",
+      "Current stage and default plan mode apply; files and durable tasks retain their state",
+      "Omitting resume still starts a new conversation",
+      "Selection uses latest conversation activity and excludes other workspace headers",
+      "Missing conversations fail with an actionable message",
+      "Linked transcripts are rejected without modifying the linked file"
+    ]
+  }
+}

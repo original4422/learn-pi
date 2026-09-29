@@ -83,6 +83,14 @@ npm run agent -- --stage 9 --workspace examples/workspaces/todo
 
 可用 `--provider` 和 `--model` 指定实际可用模型，用 `--stage 1` 到 `--stage 9` 回到对应课程阶段。`--prompt` 是单次非交互模式；默认拒绝需要人工批准的写入。
 
+退出后继续刚才的对话：
+
+```sh
+npm run agent -- --stage 9 --workspace examples/workspaces/todo --resume
+```
+
+`--resume` 选择当前工作区 `.learn-pi/sessions/` 中最近活跃的会话，恢复历史消息和工具结果，并继续写入同一会话文件。启动输出包含会话 ID 与文件路径。阶段、模型和模式按本次参数重新设置，默认仍是 `plan`，需要执行时再次输入 `/mode execute`。文件和任务保持退出时的状态。续聊前保持原练习目录，不运行 `lab:reset`；省略 `--resume` 会创建新对话。如果该工作区没有保存的会话，命令会提示先不带 `--resume` 启动。
+
 `--approve-fixture` 只接受课程标记目录，并自动批准有限的写入、验证和检查点工具。**其中验证会执行模型修改后的项目代码，仍持有宿主权限和继承的环境凭据。它不是安全的 shell 替代品。** 如需限制执行环境，使用容器实验。
 
 ## 常见问题

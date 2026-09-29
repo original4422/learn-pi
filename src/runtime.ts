@@ -1,5 +1,5 @@
 import { join, resolve } from 'node:path';
-import { readFile } from 'node:fs/promises';
+import { lstat, readFile } from 'node:fs/promises';
 import { InMemoryCredentialStore, InMemoryModelsStore, type Model, type Api } from '@earendil-works/pi-ai';
 import { createAgentSession, DefaultResourceLoader, ModelRuntime, SessionManager, SettingsManager, type AgentSession } from '@earendil-works/pi-coding-agent';
 import { CourseController, type CourseOptions } from './extensions/course.ts';
@@ -8,6 +8,7 @@ import { stageTools } from './stages.ts';
 export interface RuntimeOptions extends CourseOptions {
   model?: Model<Api>;
   persistSession?: boolean;
+  resumeSession?: boolean;
   maxModelCalls?: number;
   timeoutMs?: number;
 }
@@ -16,6 +17,16 @@ export async function createCourseSession(options: RuntimeOptions) {
   const cwd = resolve(options.cwd);
   const controller = new CourseController({ ...options, cwd });
   await controller.prepare();
+  const sessionDir = join(cwd, '.learn-pi', 'sessions');
+  let sessionManager: SessionManager;
+  if (options.resumeSession) {
+    const [recent] = await SessionManager.list(cwd, sessionDir);
+    if (!recent) throw new Error('No saved session in this workspace. Start without --resume first.');
+    if (!(await lstat(recent.path)).isFile()) throw new Error('Saved session must be a regular file, not a symbolic link');
+    sessionManager = SessionManager.open(recent.path, sessionDir);
+  } else {
+    sessionManager = options.persistSession ? SessionManager.create(cwd, sessionDir) : SessionManager.inMemory(cwd);
+  }
   const agentDir = join(cwd, '.learn-pi', 'runtime');
   const modelRuntime = options.modelRuntime ?? await ModelRuntime.create({ credentials: new InMemoryCredentialStore(), modelsPath: null, modelsStore: new InMemoryModelsStore(), allowModelNetwork: false });
   // Pass the same credential runtime to real child sessions, without parent hooks.
@@ -42,7 +53,7 @@ export async function createCourseSession(options: RuntimeOptions) {
   const { session } = await createAgentSession({
     cwd, agentDir, modelRuntime, model: options.model, thinkingLevel: 'off',
     tools: stageTools(controller.stage), resourceLoader: loader, settingsManager,
-    sessionManager: options.persistSession ? SessionManager.create(cwd, join(cwd, '.learn-pi', 'sessions')) : SessionManager.inMemory(cwd),
+    sessionManager,
   });
   await session.bindExtensions({ mode: 'print', onError: error => { throw new Error(`Course extension error: ${error.error}`); } });
   session.agent.toolExecution = 'sequential'; // deterministic order for tasks/checkpoints

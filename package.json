@@ -11,7 +11,7 @@
   "scripts": {
     "check": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
-    "test:integration": "node --import tsx --test tests/runtime.test.ts tests/integrations.test.ts tests/native.test.ts tests/review.test.ts",
+    "test:integration": "node --import tsx --test tests/runtime.test.ts tests/integrations.test.ts tests/native.test.ts tests/review.test.ts tests/sessions.test.ts",
     "agent": "node --import tsx src/cli.ts",
     "demo": "node --import tsx scripts/demo.ts",
     "lab:reset": "node --import tsx scripts/lab-reset.ts",

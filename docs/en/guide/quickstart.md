@@ -83,6 +83,14 @@ npm run agent -- --stage 9 --workspace examples/workspaces/todo
 
 Select an available model with `--provider` and `--model`, and a lesson with `--stage 1` through `--stage 9`. `--prompt` runs a single noninteractive request; mutations needing approval are denied by default.
 
+Continue the conversation after exiting:
+
+```sh
+npm run agent -- --stage 9 --workspace examples/workspaces/todo --resume
+```
+
+`--resume` selects the most recently active session in this workspace's `.learn-pi/sessions/`, restores messages and tool results, and appends to the same session file. Startup prints its ID and path. The current arguments set the stage, model, and mode; the default is still `plan`, so enter `/mode execute` again when ready. Files and tasks retain their current state. Keep the original exercise directory and skip `lab:reset` when resuming. Omitting `--resume` creates a new conversation. If the workspace has no saved conversation, the command asks you to start without `--resume` first.
+
 `--approve-fixture` accepts only marked course directories and automatically approves a finite set of write, verification, and checkpoint tools. **Verification executes model-modified code with host privileges and inherited environment credentials. It is not a safe shell substitute.** Use the container experiment to constrain execution.
 
 ## Troubleshooting

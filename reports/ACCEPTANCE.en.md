@@ -4,6 +4,8 @@ Date: 2026-09-19. **The course, progressive implementation, final agent, bilingu
 
 [中文报告](ACCEPTANCE.md) · [Machine-readable results](acceptance.json) · [Version evidence](version-lock.json)
 
+2026-09-30 resume update: explicit `--resume` uses Pi's native session API to continue the most recently active conversation in the current workspace. On Node 24.16.0, `npm run verify` (48/48 tests), `npm run demo`, and the CLI help check passed. See the [resume verification record](session-resume.json).
+
 ## Delivery
 
 Independent repository: `/Users/original/Project/github/personal_project/learn-pi`. Project edits and experiments stay within this directory. No edits to `learn-codex`, `learn-claude-code`, or workspace-wide settings; no remote, push, public deployment, or social publication.
@@ -76,7 +78,7 @@ For live use, configure provider environment variables or repository-local `.cac
 2. **Execution:** approval/path policy is application-level and has a check/use race window. Approved shell/test code retains host privileges. `--approve-fixture` automatically approves selected tool names, including execution of model-modified code; it is not a sandbox. Container configuration and exact probes are supplied, but no daemon was available to run them.
 3. **Children:** separate context and read-only tools share the Node process/filesystem. The final SDK shares the model runtime with children. Native `pi -e` children do not inherit parent OAuth/custom-provider configuration; environment-backed built-in providers work. Native loading also lacks the SDK's complete model-call/deadline envelope.
 4. **Persistence:** task coordination is within one process, not a cross-process transaction. Task status is not completion evidence. Git restore accepts only marked disposable workspaces and known IDs; it does not rewind conversations/tasks/protected files, does not record empty directories, and refuses symlinks. After preflight, file copying is not crash-atomic.
-5. **Host scope:** sessions are saved without a full history-selection/resume UI. Pi's broader native sessions/Skills are distinct from course resource defaults. The supplied verification command targets the Todo fixture; general projects need their own verifier.
+5. **Host scope:** `--resume` continues the most recently active conversation in the current workspace; Pi's native interface provides history selection and branching. Pi's broader native Skills are distinct from course resource defaults. The supplied verification command targets the Todo fixture; general projects need their own verifier.
 6. **Other environments:** Linux containers, other OSes, all providers, and all models have not been tested. Sources and comparisons are version/date bounded; the course does not promise complete Codex/Claude Code replication.
 
 ## Local commits
