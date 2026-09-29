@@ -13,6 +13,8 @@ Start with Pi's model/tool loop, add planning, recoverable tasks, approval and p
 You need Node **>=22.19.0**, npm, and Git; Node 24 LTS is a good baseline. From the repository root:
 
 ```sh
+git clone https://github.com/original4422/learn-pi.git
+cd learn-pi
 # With nvm, first run nvm install && nvm use (24.16.0 from .nvmrc).
 npm ci --ignore-scripts
 npm run verify
@@ -88,7 +90,5 @@ npm run docs:check
 ```
 
 [Labs](docs/en/guide/labs.md) distinguish deterministic checks, real Pi/MCP integration, live models, and containers. Use the [code map](docs/en/guide/architecture.md) and [contribution guide](CONTRIBUTING.en.md) to extend the project.
-
-Delivery is limited to an independent local repository, preview, and acceptance report: no public repository, push, deployment, or social publishing. This is neither a complete Codex/Claude Code replica nor a standalone commercial product.
 
 MIT · [License](LICENSE)

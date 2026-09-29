@@ -13,6 +13,8 @@
 需要 Node **>=22.19.0**、npm 和 Git；建议 Node 24 LTS。在仓库根目录运行：
 
 ```sh
+git clone https://github.com/original4422/learn-pi.git
+cd learn-pi
 # 使用 nvm 时，先运行 nvm install && nvm use（读取 .nvmrc 的 24.16.0）。
 npm ci --ignore-scripts
 npm run verify
@@ -88,7 +90,5 @@ npm run docs:check
 ```
 
 [实验说明](docs/guide/labs.md)区分确定性测试、真实 Pi/MCP 集成、模型实测与容器实测。[架构地图](docs/guide/architecture.md)定位源码，[贡献说明](CONTRIBUTING.md)说明双语与测试要求。
-
-项目当前只交付独立本地仓库、预览与验收报告，不创建公开仓库、不推送、不部署、不发布社媒。不承诺完整复刻 Codex/Claude Code，也不把教学作品包装为独立商业产品。
 
 MIT · [许可证](LICENSE)
