@@ -69,3 +69,28 @@ For a manual recovery check, create a task, record its ID, exit, and reopen `/ta
 ## Design connection
 
 A task panel can make an agent appear organized. This course examines the contract behind that panel: stable identity, validated transitions, and explicit persistence. It addresses the progress-management need of coding agents without claiming to reproduce Codex or Claude Code's internal task format.
+
+## A crash after the effect: reconcile before continuing
+
+```sh
+npm run recovery:demo
+```
+
+This no-key experiment starts two independent processes on macOS / Linux, using the **official scripted model with real Pi 0.85.1**. Exercise files, conversations, and fictional receipts live in a new `.cache/recovery/pi-*/` directory. It sends no real messages and calls no remote model. Read `scripts/recovery-lab.ts` and its child process, `scripts/recovery-worker.ts`.
+
+The setup creates one `done` task and one `in_progress` task. Pi's first fixed `bash` operation rejects a fictional delivery with exit code 7; the actual tool error is saved in the conversation. The second operation appends a `delivery-001` receipt and changes `draft.txt` to `delivered`. It is deliberately **non-idempotent**: replaying it would append another receipt.
+
+After that operation finishes, a `message_end` subscriber sends `SIGKILL` to its own Pi process when it receives the successful tool result. The pinned [AgentSession source](https://github.com/earendil-works/pi/blob/d981de1229ef899957bbe968bc8dcda02a21f477/packages/coding-agent/src/core/agent-session.ts) notifies subscribers before calling `sessionManager.appendMessage()`. The experiment also inspects the JSONL actually written to disk instead of trusting that source ordering alone:
+
+| Evidence after the crash | Observation | What it establishes |
+| --- | --- | --- |
+| Task snapshot | `done`, `in_progress` | Progress survives without adjudicating the operation |
+| Failed tool result | `isError: true` | The first invocation failed |
+| Conversation for the successful invocation | A `toolCall`, but no matching `toolResult` | The conversation alone cannot establish completion |
+| Separate fictional receipt | Exactly one `delivery-001` | This local effect already happened |
+
+In the recovery process, the host reads and verifies the receipt, then passes that fact to the scripted model in a new user message. The process continues the same conversation using the SDK mechanism behind `--resume`, retains the default `plan` mode, and only calls `task_update` to mark the task `done`. Assertions check that the receipt count remains 1 and the actual executed-tool list is exactly `task_update`. Production `TaskStore` still has only `pending / in_progress / done`: tool failure and effect evidence live in the tool result and receipt, without inventing a task `failed` status.
+
+Finally the host restores the initial file checkpoint. `draft.txt` returns to `pending`, while the tasks remain `done` and neither the conversation nor the receipt rewinds. Receipts live in checkpoint-excluded `.learn-pi/recovery/` to model an independent business fact. The model's `read` tool still cannot access course metadata. Restoring files does not undo a delivery that already happened.
+
+This is a **fixture-specific receipt reconciliation policy**, not a general Pi exactly-once guarantee. The fault is process termination, not a power failure; a fixed local script produces the receipt. If an operation has no verifiable result, a missing tool result should remain unresolved rather than authorize a blind replay. Raw conversations stay in the ignored exercise directory; the public summary contains assertions and counts.

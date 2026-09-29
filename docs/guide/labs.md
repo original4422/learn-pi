@@ -9,6 +9,7 @@
 | `npm run check` | TypeScript 与锁定 API 的兼容 | 运行时策略正确 |
 | `npm test` | 路径、审批、任务、恢复、MCP、分派和运行时测试 | 商业模型的规划质量 |
 | `npm run test:integration` | 真实 Pi 会话、扩展与本地 MCP | 远程模型任务成功率 |
+| `npm run recovery:demo` | 真实 Pi SIGKILL、收据核对、任务续接与文件回滚 | 通用 exactly-once 执行 |
 | `npm run demo` | 真实工具闭环与恢复，模型响应脚本化 | 自主推理能力 |
 | `npm run docs:build` | 双语静态网站生成与链接构建检查 | 视觉在所有设备完全一致 |
 | `npm run docs:check` | 页面/导航对等与内部链接 | 翻译永远没有语义遗漏 |

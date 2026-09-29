@@ -69,6 +69,8 @@ After exiting, run `npm run agent -- --workspace examples/workspaces/todo --resu
 
 `npm run model:smoke` executes a live repair when matching credentials exist; otherwise it explicitly records `SKIPPED` in `reports/model-smoke.json`. The acceptance machine has no usable credentials, so remote-model behavior remains unverified.
 
+Run `npm run recovery:demo` for a real Pi process crash and restart: an effect commits before its tool result is saved, the host reconciles a fictional receipt, and the resumed task completes without replay. The official scripted model needs no key. See [the recovery experiment](docs/en/chapters/03-tasks.md#a-crash-after-the-effect-reconcile-before-continuing).
+
 ## Explicit boundaries
 
 - **Pi native:** model access, loop, built-in tools, events, sessions, compaction, Skills, and more. We reuse them.

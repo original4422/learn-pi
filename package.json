@@ -11,7 +11,7 @@
   "scripts": {
     "check": "tsc --noEmit",
     "test": "node --import tsx --test tests/*.test.ts",
-    "test:integration": "node --import tsx --test tests/runtime.test.ts tests/integrations.test.ts tests/native.test.ts tests/review.test.ts tests/sessions.test.ts",
+    "test:integration": "node --import tsx --test tests/runtime.test.ts tests/integrations.test.ts tests/native.test.ts tests/review.test.ts tests/sessions.test.ts tests/recovery.test.ts",
     "agent": "node --import tsx src/cli.ts",
     "demo": "node --import tsx scripts/demo.ts",
     "lab:reset": "node --import tsx scripts/lab-reset.ts",
@@ -22,7 +22,8 @@
     "verify": "npm run version:check && npm run check && npm test && npm run docs:build && npm run docs:check",
     "model:smoke": "node --import tsx scripts/model-smoke.ts",
     "version:check": "node --import tsx scripts/check-version.ts",
-    "stage": "node --import tsx scripts/stage-demo.ts"
+    "stage": "node --import tsx scripts/stage-demo.ts",
+    "recovery:demo": "node --import tsx scripts/recovery-lab.ts"
   },
   "dependencies": {
     "@earendil-works/pi-coding-agent": "0.85.1",

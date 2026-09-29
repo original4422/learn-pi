@@ -69,6 +69,8 @@ npm run agent -- --stage 9 --workspace examples/workspaces/todo
 
 `npm run model:smoke` 在有匹配凭据时执行真实模型样例，否则明确记录 `SKIPPED`，结果在 `reports/model-smoke.json`。验收机器没有可用模型凭据，远程模型效果未验证。
 
+运行 `npm run recovery:demo`，观察真实 Pi 进程崩溃与重启：动作已完成、工具结果尚未写入会话，宿主核对虚构收据后继续任务，动作不会被重放。使用官方脚本模型，无需 Key。详见[故障恢复实验](docs/chapters/03-tasks.md#进程在动作完成后崩溃-先核对-再恢复)。
+
 ## 清楚的边界
 
 - **Pi 原生能力**：模型接入、循环、内置工具、事件、会话、压缩、Skills 等。课程复用它们。
