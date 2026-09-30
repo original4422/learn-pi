@@ -56,6 +56,31 @@ npm run agent -- --stage 6 --workspace examples/workspaces/todo
 
 这仍是协作取消，不是操作系统强制终止任意代码。注入测试 runner 可能不遵守信号，宿主扩展也可能失控；强制隔离要另加进程或容器边界。
 
+## 练习：父会话消费部分结果
+
+```sh
+npm run partial:demo
+npm run partial:init
+# 编辑上一条命令输出的 .cache/partial-results/exercise-*/consumer.ts
+# 再运行它输出的 npm run partial:demo -- --consumer … 命令
+```
+
+`partial:demo` 默认运行 `examples/partial-results/reference.ts`。`partial:init` 每次创建新的练习目录，复制 starter 和类型契约，保留之前的作业。starter 只检查顶层 `isError`，预计通过 1/3；完成逐项判断后应通过 3/3。验收失败退出码为 1，报告位于输出的独立 `.cache/partial-results/run-*/report.json`。
+
+| 真实委托结果 | 父会话下一步 | 证据含义 |
+| --- | --- | --- |
+| 两项 `fulfilled`，未截断 | 直接汇总 | 两份子结果完整 |
+| researcher 成功，reviewer `rejected` | `read todo.test.ts` | 保留成功项，补查失败项 |
+| researcher `fulfilled` 且 `truncated` | `read todo.ts` | 状态成功仍可能丢失证据 |
+
+三个案例的顶层 `isError` 都是 `false`。委托工具正常返回结构化数据；子会话失败没有使整个工具抛错。`details.failed` 只统计失败项，不能发现成功但截断的项。父 Provider 回调从实际收到的 `toolResult.content` 解析结果，调用你的 `decide(observation)`，再发出下一次工具请求。补读路径由固定角色映射决定；子输出不提供路径权限。
+
+本练习使用 Pi 0.85.1 的真实父子会话、真实文件读取和官方脚本模型。子错误来自脚本 Provider 的错误响应；8,000 字符截断由现有委托工具执行。补读后报告仍标明委托不完整，并保留已成功的证据。它验证消费逻辑与 Pi 传递链，不测量远程模型的决策能力。
+
+验收检查实际父工具序列、对应读取内容、结果完整性声明，以及样例源码/测试/指令文件的前后哈希。始终汇总或始终补读两个角色都不能通过；运行过程不执行样例测试。练习函数是本地 TypeScript 代码，像仓库测试一样在宿主进程执行。实现和反例见 `scripts/partial-results-lab.ts`、`tests/partial-results.test.ts`。
+
+锁定版本的[工具返回契约](https://github.com/earendil-works/pi/blob/d981de1229ef899957bbe968bc8dcda02a21f477/packages/coding-agent/docs/extensions.md)区分了返回值与抛错：返回的 `content` 进入模型上下文，执行抛错才设置工具错误标记。
+
 ## 无 Key 与真实模型分别验证什么
 
 `npm test` 用可控 runner 验证并发上限、错误收敛、取消和输出截断。`npm run test:integration` 创建真实 Pi 子会话，验证资源加载与工具边界。脚本化 Provider 可以驱动真实子会话执行读取，但不能证明研究与审查的结论正确。

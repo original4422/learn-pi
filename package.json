@@ -23,7 +23,9 @@
     "model:smoke": "node --import tsx scripts/model-smoke.ts",
     "version:check": "node --import tsx scripts/check-version.ts",
     "stage": "node --import tsx scripts/stage-demo.ts",
-    "recovery:demo": "node --import tsx scripts/recovery-lab.ts"
+    "recovery:demo": "node --import tsx scripts/recovery-lab.ts",
+    "partial:demo": "node --import tsx scripts/partial-results-lab.ts",
+    "partial:init": "npm run partial:demo -- --init"
   },
   "dependencies": {
     "@earendil-works/pi-coding-agent": "0.85.1",

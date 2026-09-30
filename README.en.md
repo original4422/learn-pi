@@ -71,6 +71,8 @@ After exiting, run `npm run agent -- --workspace examples/workspaces/todo --resu
 
 Run `npm run recovery:demo` for a real Pi process crash and restart: an effect commits before its tool result is saved, the host reconciles a fictional receipt, and the resumed task completes without replay. The official scripted model needs no key. See [the recovery experiment](docs/en/chapters/03-tasks.md#a-crash-after-the-effect-reconcile-before-continuing).
 
+Run `npm run partial:demo` to observe the parent inspect actual failed/truncated delegation results and read the missing evidence; `npm run partial:init` creates an editable no-key exercise. See [the Chapter 6 exercise](docs/en/chapters/06-subagents.md#exercise-consume-partial-results-in-the-parent).
+
 ## Explicit boundaries
 
 - **Pi native:** model access, loop, built-in tools, events, sessions, compaction, Skills, and more. We reuse them.

@@ -9,6 +9,7 @@ A sentence saying “done” is not an experiment. Every conclusion should have 
 | `npm run check` | TypeScript compatibility with pinned APIs | Runtime policy correctness |
 | `npm test` | Paths, approval, persistence, recovery, MCP, delegation, runtime tests | Commercial-model planning quality |
 | `npm run test:integration` | Actual Pi sessions, extension wiring, local MCP | Remote-model success rates |
+| `npm run partial:demo` | Parent consumes actual delegation failures/truncation and chooses fallback reads | Remote-model decision quality |
 | `npm run recovery:demo` | Real Pi SIGKILL, receipt reconciliation, resumed task and file rollback | General exactly-once execution |
 | `npm run demo` | Real tool workflow and recovery with scripted responses | Autonomous reasoning quality |
 | `npm run docs:build` | Bilingual static build and build-time links | Identical appearance on every device |
@@ -63,3 +64,7 @@ The build machine has Docker CLI but no reachable daemon, so image build and pro
 ## Record your own acceptance
 
 Record the date, Node/Pi versions, commands, exit codes, report paths, and skip reasons. For model experiments, include provider/model IDs, diffs, and test results without secrets. Distinguish type checks, deterministic behavior, real integration, and remote-model task success whenever claiming completion.
+
+## Partial delegation results exercise
+
+Run `npm run partial:init` for a fresh starter, edit the printed `consumer.ts`, and run the printed acceptance command. Move from 1/3 to 3/3: summarize complete results; read only the corresponding file for a failure or truncation. See [Chapter 6](../chapters/06-subagents.md#exercise-consume-partial-results-in-the-parent) for the reference and real Pi tool chain.

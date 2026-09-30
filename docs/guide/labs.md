@@ -9,6 +9,7 @@
 | `npm run check` | TypeScript 与锁定 API 的兼容 | 运行时策略正确 |
 | `npm test` | 路径、审批、任务、恢复、MCP、分派和运行时测试 | 商业模型的规划质量 |
 | `npm run test:integration` | 真实 Pi 会话、扩展与本地 MCP | 远程模型任务成功率 |
+| `npm run partial:demo` | 父会话消费真实委托失败/截断，选择补读 | 远程模型的决策质量 |
 | `npm run recovery:demo` | 真实 Pi SIGKILL、收据核对、任务续接与文件回滚 | 通用 exactly-once 执行 |
 | `npm run demo` | 真实工具闭环与恢复，模型响应脚本化 | 自主推理能力 |
 | `npm run docs:build` | 双语静态网站生成与链接构建检查 | 视觉在所有设备完全一致 |
@@ -63,3 +64,7 @@ docker run --rm --read-only --network none --cap-drop ALL --security-opt no-new-
 ## 如何记录自己的验收
 
 记录日期、Node/Pi 版本、命令、退出码、对应报告路径，以及任何跳过原因。模型实验再记录 Provider/模型 ID、改动 diff 与测试结果，不记录密钥。每次声明“完成”时，明确这是类型通过、确定性行为通过、真实集成通过还是远程模型任务通过。
+
+## 部分委托结果练习
+
+运行 `npm run partial:init` 创建独立 starter，修改输出的 `consumer.ts` 并用输出命令验收。目标是从 1/3 提升到 3/3：全成功直接汇总，失败和截断只补读对应文件。参考实现与实际 Pi 工具链见[第六章](../chapters/06-subagents.md#练习-父会话消费部分结果)。
