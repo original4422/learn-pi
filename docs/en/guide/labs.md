@@ -9,6 +9,7 @@ A sentence saying “done” is not an experiment. Every conclusion should have 
 | `npm run check` | TypeScript compatibility with pinned APIs | Runtime policy correctness |
 | `npm test` | Paths, approval, persistence, recovery, MCP, delegation, runtime tests | Commercial-model planning quality |
 | `npm run test:integration` | Actual Pi sessions, extension wiring, local MCP | Remote-model success rates |
+| `npm run recovery:demo` | Real Pi SIGKILL, receipt reconciliation, resumed task and file rollback | General exactly-once execution |
 | `npm run demo` | Real tool workflow and recovery with scripted responses | Autonomous reasoning quality |
 | `npm run docs:build` | Bilingual static build and build-time links | Identical appearance on every device |
 | `npm run docs:check` | Page/navigation parity and local links | Perfect translation semantics forever |

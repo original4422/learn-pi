@@ -13,6 +13,8 @@ Start with Pi's model/tool loop, add planning, recoverable tasks, approval and p
 You need Node **>=22.19.0**, npm, and Git; Node 24 LTS is a good baseline. From the repository root:
 
 ```sh
+git clone https://github.com/original4422/learn-pi.git
+cd learn-pi
 # With nvm, first run nvm install && nvm use (24.16.0 from .nvmrc).
 npm ci --ignore-scripts
 npm run verify
@@ -63,7 +65,11 @@ npm run agent -- --stage 9 --workspace examples/workspaces/todo
 
 Alternatively configure the appropriate API key environment variable securely, then select an available model with `--provider` / `--model`. The agent starts in `plan`. Read code and tests, review the plan, enter `/mode execute` yourself, and approve concrete operations. Host commands include `/tasks`, `/status`, `/checkpoint LABEL`, `/restore ID`, `/compact`, and `/quit`.
 
+After exiting, run `npm run agent -- --workspace examples/workspaces/todo --resume` to continue the most recently active conversation in that workspace. Conversations live in `.learn-pi/sessions/`; startup prints the session ID and file. Omitting `--resume` starts a new conversation. Resuming uses the current stage, model, and mode options, with `plan` as the default.
+
 `npm run model:smoke` executes a live repair when matching credentials exist; otherwise it explicitly records `SKIPPED` in `reports/model-smoke.json`. The acceptance machine has no usable credentials, so remote-model behavior remains unverified.
+
+Run `npm run recovery:demo` for a real Pi process crash and restart: an effect commits before its tool result is saved, the host reconciles a fictional receipt, and the resumed task completes without replay. The official scripted model needs no key. See [the recovery experiment](docs/en/chapters/03-tasks.md#a-crash-after-the-effect-reconcile-before-continuing).
 
 ## Explicit boundaries
 
@@ -86,7 +92,5 @@ npm run docs:check
 ```
 
 [Labs](docs/en/guide/labs.md) distinguish deterministic checks, real Pi/MCP integration, live models, and containers. Use the [code map](docs/en/guide/architecture.md) and [contribution guide](CONTRIBUTING.en.md) to extend the project.
-
-Delivery is limited to an independent local repository, preview, and acceptance report: no public repository, push, deployment, or social publishing. This is neither a complete Codex/Claude Code replica nor a standalone commercial product.
 
 MIT · [License](LICENSE)

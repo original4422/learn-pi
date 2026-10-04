@@ -13,6 +13,8 @@
 需要 Node **>=22.19.0**、npm 和 Git；建议 Node 24 LTS。在仓库根目录运行：
 
 ```sh
+git clone https://github.com/original4422/learn-pi.git
+cd learn-pi
 # 使用 nvm 时，先运行 nvm install && nvm use（读取 .nvmrc 的 24.16.0）。
 npm ci --ignore-scripts
 npm run verify
@@ -63,7 +65,11 @@ npm run agent -- --stage 9 --workspace examples/workspaces/todo
 
 也可以安全地配置对应 API Key 环境变量，再用 `--provider` / `--model` 选择实际可用模型。默认 `plan` 模式；先读代码与测试，审阅计划后由人输入 `/mode execute`，再逐项批准具体操作。`/tasks`、`/status`、`/checkpoint LABEL`、`/restore ID`、`/compact` 和 `/quit` 提供宿主控制。
 
+退出后，用 `npm run agent -- --workspace examples/workspaces/todo --resume` 继续当前工作区最近活跃的会话。对话保存在工作区 `.learn-pi/sessions/`，启动时显示会话 ID 与文件。省略 `--resume` 会新建对话；续聊使用本次启动的阶段、模型和模式，默认仍为 `plan`。
+
 `npm run model:smoke` 在有匹配凭据时执行真实模型样例，否则明确记录 `SKIPPED`，结果在 `reports/model-smoke.json`。验收机器没有可用模型凭据，远程模型效果未验证。
+
+运行 `npm run recovery:demo`，观察真实 Pi 进程崩溃与重启：动作已完成、工具结果尚未写入会话，宿主核对虚构收据后继续任务，动作不会被重放。使用官方脚本模型，无需 Key。详见[故障恢复实验](docs/chapters/03-tasks.md#进程在动作完成后崩溃-先核对-再恢复)。
 
 ## 清楚的边界
 
@@ -86,7 +92,5 @@ npm run docs:check
 ```
 
 [实验说明](docs/guide/labs.md)区分确定性测试、真实 Pi/MCP 集成、模型实测与容器实测。[架构地图](docs/guide/architecture.md)定位源码，[贡献说明](CONTRIBUTING.md)说明双语与测试要求。
-
-项目当前只交付独立本地仓库、预览与验收报告，不创建公开仓库、不推送、不部署、不发布社媒。不承诺完整复刻 Codex/Claude Code，也不把教学作品包装为独立商业产品。
 
 MIT · [许可证](LICENSE)

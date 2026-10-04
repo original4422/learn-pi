@@ -1,0 +1,55 @@
+{
+  "kind": "real-pi-scripted-model-process-recovery",
+  "pi": "0.85.1",
+  "remoteModel": false,
+  "crashSignal": "SIGKILL",
+  "distinctProcesses": true,
+  "failedOperationResultPersisted": true,
+  "successfulOperationCallPersisted": true,
+  "successfulOperationResultPersistedBeforeResume": false,
+  "receiptsBeforeResume": 1,
+  "receiptsAfterResume": 1,
+  "resumeTools": [
+    "task_update"
+  ],
+  "sameConversation": true,
+  "resumedMode": "plan",
+  "taskStatesBeforeResume": [
+    "done",
+    "in_progress"
+  ],
+  "taskStatesAfterResume": [
+    "done",
+    "done"
+  ],
+  "checkpoint": {
+    "draftRestored": true,
+    "receiptUnchanged": true,
+    "tasksUnchanged": true,
+    "conversationUnchanged": true
+  },
+  "at": "2026-09-29T21:45:49.175205+00:00",
+  "environment": {
+    "node": "26.8.1",
+    "platform": "darwin",
+    "pi": "0.85.1"
+  },
+  "pinnedSource": {
+    "commit": "d981de1229ef899957bbe968bc8dcda02a21f477",
+    "file": "packages/coding-agent/src/core/agent-session.ts",
+    "ordering": "_handleAgentEvent: _emit(event) precedes sessionManager.appendMessage(event.message) for message_end",
+    "installedAgentSessionSha256": "fb8a3981c20c8c0bbd42231b1c99a10335fb3858b659056b341954de9cfa467f",
+    "evidence": "Assertions inspected the persisted JSONL: failed result present; committed-delivery call present and result absent before restart."
+  },
+  "validation": {
+    "npm run verify": {
+      "testsPassed": 49,
+      "testsSkipped": 0,
+      "builtPages": 39,
+      "linksAndAnchors": 1284
+    },
+    "npm run demo": "PASS: failing -> fixed -> four passing tests -> original restored",
+    "node --import tsx scripts/recovery-lab.ts": "PASS"
+  },
+  "policy": "Host fixture receipt reconciliation; no automatic replay and no general exactly-once guarantee."
+}

@@ -82,7 +82,17 @@ These entry points share capability modules but differ in lifecycle and authenti
 
 SDK-hosted prompts have model-call and time budgets; children have independent limits. Direct native `-e` loading does not pass through the SDK's parent-prompt budget wrapper. Errors must reach the host rather than masquerading as empty success. Session disposal, MCP shutdown, and cancellation belong to failure paths as well as successful ones.
 
-The course saves session files, but this CLI does not implement a full history-selection or automatic-resume interface. Task snapshot recovery is what we explicitly validate across restarts. Pi's native session capabilities and this CLI's interface scope are separate things.
+## Continue a conversation after exiting
+
+```sh
+npm run agent -- --stage 9 --workspace examples/workspaces/todo --resume
+```
+
+The SDK creates a new session by default. Explicit `--resume` uses Pi's `SessionManager.list(cwd, sessionDir)` to select the most recently active record for the current workspace, then passes `SessionManager.open()` to `createAgentSession()`. Pi restores user messages, assistant messages, and tool results; new messages append to the same file. If no saved conversation exists, startup reports an error and asks you to start a new conversation first. The CLI prints the session ID and file for inspection.
+
+The session supplies conversation context. The current launch configures the stage, model, mode, and approval callback, defaulting to `plan`; workspace files, tasks, and checkpoints retain their current state. Skip `lab:reset` before resuming because it generates a new exercise directory. This entry point selects the most recently active session; history selection and conversation branching remain available through Pi's native interface.
+
+`tests/sessions.test.ts` uses real Pi with the official scripted model to read a file, record a task, close the session, and resume with a new model runtime. It asserts that old messages and tool results reach the next model request, the same file receives appended messages, and the current stage and plan mode apply. It also checks fresh conversations by default, recent-session selection, exclusion of other workspaces' records, missing-session errors, and symlink rejection. Run `npm run test:integration` to reproduce.
 
 ## Final acceptance
 
@@ -99,4 +109,4 @@ The first three need no commercial model key. `model:smoke` records a real-model
 
 ## What to extend next
 
-Choose a small, verifiable improvement: another read-only tool, cross-process task locking, child-process isolation, or an explicit conversation-resume interface. Change one responsibility at a time, with bilingual explanation and a matching failure experiment. A teaching v1 is not a promise to reproduce every product feature.
+Choose a small, verifiable improvement: another read-only tool, cross-process task locking, child-process isolation, or a history-selection interface. Change one responsibility at a time, with bilingual explanation and a matching failure experiment. A teaching v1 is not a promise to reproduce every product feature.

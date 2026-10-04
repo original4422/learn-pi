@@ -69,3 +69,28 @@ await store.update(task.id, "done");
 ## 设计对应
 
 任务面板常给人一种 Agent 正在有序工作的感觉。本课程强调面板背后的契约：稳定身份、可验证状态转移和持久化边界。它对应编程 Agent 的进度管理需求，但不声称复制 Codex 或 Claude Code 的内部任务存储格式。
+
+## 进程在动作完成后崩溃：先核对，再恢复
+
+```sh
+npm run recovery:demo
+```
+
+这个无 Key 实验在 macOS / Linux 上启动两个独立进程，使用**官方脚本模型驱动真实 Pi 0.85.1**。所有练习文件、会话和虚构收据都在新建的 `.cache/recovery/pi-*/` 中；不会发送真实消息或调用远程模型。入口是 `scripts/recovery-lab.ts`，子进程在 `scripts/recovery-worker.ts`。
+
+实验先准备一个 `done` 任务和一个 `in_progress` 任务。Pi 的第一个固定 `bash` 操作以退出码 7 拒绝虚构投递，实际工具错误会写进会话。第二个操作追加一条 `delivery-001` 收据，并把 `draft.txt` 改成 `delivered`。这一步故意**不是幂等的**：再次执行会追加第二条收据。
+
+动作结束后，实验在成功工具结果的 `message_end` 回调中向当前 Pi 进程发送 `SIGKILL`。锁定版本的 [AgentSession 源码](https://github.com/earendil-works/pi/blob/d981de1229ef899957bbe968bc8dcda02a21f477/packages/coding-agent/src/core/agent-session.ts) 先通知会话订阅者，再调用 `sessionManager.appendMessage()`。实验同时检查实际落盘 JSONL，而不只依赖这个源码顺序：
+
+| 崩溃后的证据 | 实际观察 | 可以推断什么 |
+| --- | --- | --- |
+| 任务清单 | `done`、`in_progress` | 清单保留了进度，没有替动作做最终判定 |
+| 失败工具结果 | `isError: true` | 第一次调用确实失败 |
+| 成功调用对应的会话 | 有 `toolCall`，没有该 `toolResult` | 仅凭会话无法判定动作是否完成 |
+| 独立虚构收据 | `delivery-001` 恰好 1 条 | 这次本地动作确实已经完成 |
+
+恢复进程先由宿主读取并核对收据，再以新用户消息把事实交给脚本模型。它用 `--resume` 背后的同一个 SDK 机制继续原对话，保持默认 `plan` 模式，只调用 `task_update` 将任务置为 `done`。验收断言恢复前后收据计数都为 1，并检查真实执行列表只有 `task_update`。生产 `TaskStore` 仍只有 `pending / in_progress / done`；工具失败和动作完成证据分别保存在工具结果与收据中，不伪造一个任务 `failed` 状态。
+
+最后，宿主恢复最初的文件 checkpoint：`draft.txt` 回到 `pending`，但任务仍为 `done`，会话和收据都不回退。收据放在 checkpoint 排除的 `.learn-pi/recovery/`，模拟独立的业务事实；模型的 `read` 仍不能读取课程元数据。文件回滚不代表已经发生的投递被撤销。
+
+这是一个**固定样例的收据核对策略**，不是 Pi 通用的 exactly-once 保证。实验制造的是进程终止，不是断电；收据内容由本地固定脚本生成。面对没有可核对结果的动作，缺失工具结果应保留为待确认，不能据此盲目重放。原始会话留在忽略的练习目录，公开汇总只记录断言与计数。
